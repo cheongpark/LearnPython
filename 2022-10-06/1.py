@@ -10,7 +10,7 @@ datas = []
 citys = {"서울", "인천", "대구", "울산", "세종", "충남", "경북", "전북", "제주", "경기", "부산", "대전", "광주", "충북", "강원", "경남", "전남"}
 
 for city in citys :
-    for page in range(1, 115 + 1) :
+    for page in range(1, 3 + 1) :
         response = requests.post(
             "https://auction.realestate.daum.net/ajax/main_list.php",
             params = {
@@ -86,5 +86,5 @@ for city in citys :
         
         time.sleep(timesleep)
 
-    with open("./ALL/{city}/all.json", 'w', encoding = "utf-8") as f:
+    with open(f"./ALL/{city}/all.json", 'w', encoding = "utf-8") as f:
         f.write(json.dumps(datas, ensure_ascii = False))
