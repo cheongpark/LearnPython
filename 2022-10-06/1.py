@@ -4,6 +4,7 @@ from pprint import pprint
 import json
 import time #서버에서 비정상적 판단때문에 넣는 것 타임을 줌
 
+timesleep = 0 #몇초동안 잘지
 count = 1
 datas = []
 citys = {"서울", "인천", "대구", "울산", "세종", "충남", "경북", "전북", "제주", "경기", "부산", "대전", "광주", "충북", "강원", "경남", "전남"}
@@ -52,15 +53,15 @@ for city in citys :
 
         #print(response.status_code)
 
-        with open(f"./html/{city}/{page}page.html", 'w', encoding = "utf-8") as f:
-            f.write(response.text)
-
         soup = BeautifulSoup(response.text, "html.parser")
         trs = soup.select(selector = '#frm_myreg > table > tbody > tr')
 
         if len(trs) == 0 :
-            print(f"{page} 에서 ")
+            print(f"{city}의 {page} 에서 끝남")
             break
+
+        with open(f"./html/{city}/{page}page.html", 'w', encoding = "utf-8") as f:
+            f.write(response.text)
 
         jsonpage = []
         for tr in trs:
@@ -73,7 +74,7 @@ for city in citys :
             }
 
             print('-' * 20)
-            print(str(count) + "번째 " + data["사건번호"])
+            print(f"{city}의 {count}번째 {data['사건번호']}")
             
             datas.append(data)
             jsonpage.append(data)
@@ -83,7 +84,7 @@ for city in citys :
         with open(f"./json/{city}/{page}page.json", 'w', encoding = "utf-8") as f:
             f.write(json.dumps(datas, ensure_ascii = False))
         
-        time.sleep(5)
+        time.sleep(timesleep)
 
     with open("./ALL/{city}/all.json", 'w', encoding = "utf-8") as f:
         f.write(json.dumps(datas, ensure_ascii = False))
