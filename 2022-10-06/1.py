@@ -14,18 +14,18 @@ for city in citys :
         response = requests.post(
             "https://auction.realestate.daum.net/ajax/main_list.php",
             params = {
-                "addr1": "서울",
+                "addr1": city,
                 "result": 99,
                 "yongdo": 99,
                 "yongdo_detail": 99,
                 "sort": "13D",
             },
             data = {
-                "total": 1379,
+                #"total": 1379,
                 "block": page,
                 "start": "",
                 "next": "",
-                "addr1": "서울",
+                "addr1": city,
                 "addr2": "",
                 "addr3": "",
                 "bubcd": "",
