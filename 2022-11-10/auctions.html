@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>へえええ？？？！！</title>
+</head>
+
+<style>
+    p,
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #auctionList {
+        list-style-type: none;
+    }
+
+    .auctionRow {
+        display: block;
+        padding: 16px 32px;
+        border-radius: 16px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        margin-bottom: 16px;
+    }
+
+    .auctionID {
+        font-size: 20px;
+    }
+
+    .auctionAddress {
+        font-size: 16px;
+        margin-top: 16px;
+    }
+
+    .auctionPrice {
+        font-size: 16px;
+        margin-top: 8px;
+    }
+</style>
+
+<script>
+    function load_auctions() {
+        fetch('http://127.0.0.1:8000/apis/auctions')
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach(element => {
+                    const list = document.getElementById('auctionList');
+                    list.insertAdjacentHTML('beforeend', `
+                        <li class="auctionRow">
+                            <p class="auctionID">사건번호: ${element.사건번호}</p>
+                            <p class="auctionAddress">소재지: ${element.소재지}</p>
+                            <p class="auctionPrice">감정가: ${element.감정가}</p>
+                        </li>
+                    `);
+                });
+            });
+    }
+
+    load_auctions();
+</script>
+
+<body>
+    <ul id="auctionList">
+
+    </ul>
+</body>
+</html>
